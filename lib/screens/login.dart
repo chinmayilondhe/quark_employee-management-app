@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../helper/api_model.dart';
 import '../helper/shared_pref_manager.dart';
 import 'homepage.dart';
 class LoginPage extends StatefulWidget {
@@ -11,27 +12,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController mobileNoController = TextEditingController();
-  TextEditingController ipAdd = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   bool isLoading = false;
-  String? url;
-  SharedPrefManager sharedData = SharedPrefManager();
-  getURL() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      url = prefs.getString('ServerURL');
-    });
-  }
 
-  setURL(String url) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('ServerURL', url);
-  }
-  @override
-  void initState() {
-    getURL();
-    super.initState();
-  }
+  SharedPrefManager sharedData = SharedPrefManager();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,19 +49,14 @@ class _LoginPageState extends State<LoginPage> {
               child: SizedBox(
                 width: 350,
                 child: TextFormField(
-                  controller: mobileNoController,
+                  controller: email,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Mobile Number',
-                    hintText: 'Enter a 10-digit number',
+                    labelText: 'Username',
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   autofocus: true,
                   cursorRadius: const Radius.circular(15),
-                  // inputFormatters: <TextInputFormatter>[
-                  //   LengthLimitingTextInputFormatter(10),
-                  //   FilteringTextInputFormatter.digitsOnly
-                  // ],
                 ),
               ),
             ),
@@ -84,10 +65,11 @@ class _LoginPageState extends State<LoginPage> {
               child: SizedBox(
                 width: 350,
                 child: TextFormField(
-                  controller: ipAdd..text = url ?? '',
+                  controller: password,
+                  obscureText: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Server URL',
+                    labelText: 'Password',
                   ),
                   cursorRadius: const Radius.circular(15),
                 ),
@@ -103,15 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.blue.shade900,
                     borderRadius: BorderRadius.circular(15)),
                 child: TextButton(
-                  onPressed: () async {
-                    setURL(ipAdd.text);
-                    setState(() {
-                      isLoading = true;
-                    });
-                    login();
-
-                    // }
-                  },
+                  onPressed: login,
                   child: const Text('Sign In',
                       style: TextStyle(
                         color: Colors.white,
@@ -131,36 +105,33 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 String mobile = "";
-// Api apiCall = Api();
+Api apiCall = Api();
 
 Future<void> login() async {
-  int mobilenum = int.tryParse(mobileNoController.text.toString()) ?? 0;
 
-  if (mobileNoController.text.isNotEmpty ) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (c) => HomePage()),
-    );
-    sharedData.setIpAdd(ipAdd.text);
-
-    // String devicetoken = await sharedData.getdeviceToken();
-    // // bool status = await apiCall.login(mobilenum, devicetoken);
-    // bool status=false;
-    // if (status == true) {
-    //   sharedData.setLogin(false);
-    //   sharedData.setMobNo(mobileNoController.text);
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(builder: (c) => HomePage()),
-    //   );
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //       const SnackBar(content: Text('Invalid Mobile number')));
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    // }
+  String email_id = email.text ;
+  String password_text=password.text;
+  if (email.text.isNotEmpty && password.text.isNotEmpty) {
+    var loginData = await apiCall.login(email_id, password_text);
+    String employee_id=loginData['_id'] ?? "";
+    print('status ${loginData["status"]}');
+    if (loginData["status"] == "ok") {
+      sharedData.setLogin(false);
+      sharedData.setEmail(email.text);
+      sharedData.setEmpID(employee_id);
+      setState(() {
+        isLoading = false;
+      });
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (c) => HomePage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid Email')));
+      setState(() {
+        isLoading = false;
+      });
+    }
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Credentials are required')));

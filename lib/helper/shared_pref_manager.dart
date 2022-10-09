@@ -41,22 +41,15 @@ class SharedPrefManager {
     prefs?.remove('$key');
   }
 
-  dynamic getIpAdd() {
-    var ipAddress = _getStringSharedprefs('ipAdd');
-    return ipAddress;
+  dynamic getEmpID() {
+    var emp_id = _getStringSharedprefs('Emp_Id');
+    return emp_id;
   }
 
-  dynamic getMobNo() async {
+  dynamic getEmail() async {
 
-    var mobNo;
-    String mobNum = await _getStringSharedprefs('MobileNo') ?? "";
-    try {
-      mobNo = int.parse(mobNum);
-
-    } on FormatException {
-      print("Format Error!");
-    }
-    return mobNo;
+    String email = await _getStringSharedprefs('Email') ;
+    return email;
   }
 
   dynamic getLogin() {
@@ -64,53 +57,16 @@ class SharedPrefManager {
     return loginUser;
   }
 
-  dynamic getAlertsFG() {
-    var stringListfg = _getStringListSharedprefs('alertdatalistfg');
-    return stringListfg;
+  setEmpID(var emp_id) {
+    _setStringSharedprefs('Emp_Id', emp_id);
   }
 
-  dynamic getAlertsBG() {
-    var stringListbg = _getStringListSharedprefs('alertdatalistbg');
-    return stringListbg;
-  }
-
-  dynamic getdeviceToken() {
-    var deviceToken = _getStringSharedprefs('deviceToken');
-
-    return deviceToken;
-  }
-
-  setIpAdd(var ip) {
-    _setStringSharedprefs('ipAdd', ip);
-  }
-
-  setMobNo(var mobnum) {
-    _setStringSharedprefs('MobileNo', mobnum);
+  setEmail(var email) {
+    _setStringSharedprefs('Email', email);
   }
 
   setLogin(var user) {
     _setBoolSharedprefs('login', user);
-  }
-
-  setAlertsFG(var fglist) {
-    _setStringListSharedprefs('alertdatalistfg', fglist);
-  }
-
-  setAlertsBG(var bglist) {
-    _setStringListSharedprefs('alertdatalistbg', bglist);
-  }
-
-  setDeviceToken(var devicetoken) {
-    _setStringSharedprefs('deviceToken', devicetoken);
-
-  }
-
-  removeAlertfg() {
-    _removeval('alertdatalistfg');
-  }
-
-  removeAlertbg() {
-    _removeval('alertdatalistbg');
   }
 
   removeMob() {

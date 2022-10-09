@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 
 import '../helper/api_model.dart';
-
-
+import '../helper/shared_pref_manager.dart';
+import '../model/response_body.dart';
 
 class PieData {
   Api apiCall = Api();
-  Map piechart={};
-  static double break_val=0,meet_val=0,work_val=0;
-  void getData()async {
-    piechart=await apiCall.getPieChart("6341c5de61449f25afebc39f");
-    break_val=piechart['break'];
-    meet_val=piechart['meeting'];
-    work_val=piechart['work'];
+  SharedPrefManager sharedData = SharedPrefManager();
+  Future<List<Data>> getData() async {
+    String emp_id = await sharedData.getEmpID();
+    var break_val, meet_val, work_val;
+    ResponseBody responseBody = await apiCall.getPieChart(emp_id);
+
+    break_val = double.parse(responseBody.break_val.toString());
+    meet_val = double.parse(responseBody.meet_val.toString());
+    work_val = double.parse(responseBody.work_Val.toString());
+    List<Data> data = [
+      Data('Break', break_val),
+      Data('Meeting', meet_val),
+      Data('Work', work_val),
+    ];
+    return data;
   }
-
-   static List<Data> data = [
-    Data(name: 'Break', val: break_val, color: const Color(0xff0293ee)),
-    Data(name: 'Meeting', val: meet_val, color: const Color(0xfff8b250)),
-    Data(name: 'Work', val: work_val, color: Colors.black),
-
-  ];
 }
 
 class Data {
-  final String name;
-
+  final String task;
   final double val;
-
-  final Color color;
-
-  Data({required this.name,required this.val, required this.color});
+  Data(this.task, this.val);
 }

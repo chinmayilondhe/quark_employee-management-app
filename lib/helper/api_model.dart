@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 
 import '../model/response_body.dart';
 
-
 SharedPrefManager shareddata = SharedPrefManager();
 List originalList = [];
 
@@ -23,7 +22,7 @@ class Api {
     getapiData['m'] = mobnumber;
     getapiData['l'] = datalist;
     var ackData =
-    await _performHttpRequest('POST', '/acknowledgement/', getapiData);
+        await _performHttpRequest('POST', '/acknowledgement/', getapiData);
     var status = ackData['s'];
     return status;
   }
@@ -45,15 +44,14 @@ class Api {
   //   return responsedata;
   // }
 
-  getPieChart(String emp_id ) async {
-
-    String endUrl= '/task/graph/'+ emp_id;
+  getPieChart(String emp_id) async {
+    String endUrl = '/task/graph/' + emp_id;
 
     // getapiData['f'] = getFilterList();
     var pieChartData = await _performHttpRequest('GET', endUrl, {});
-    var break_val= pieChartData['break'];
-   var meet_val = pieChartData['meeting'];
-   var work_Val= pieChartData['work'];
+    var break_val = pieChartData['break'];
+    var meet_val = pieChartData['meeting'];
+    var work_Val = pieChartData['work'];
     ResponseBody responsedata = ResponseBody(
         break_val: break_val, meet_val: meet_val, work_Val: work_Val);
     return responsedata;
@@ -63,7 +61,8 @@ class Api {
     Map getapiData = {};
     getapiData['email'] = email;
     getapiData['password'] = password;
-    var loginData = await _performHttpRequest('POST', '/employee/login', getapiData);
+    var loginData =
+        await _performHttpRequest('POST', '/employee/login', getapiData);
     print('data: $loginData');
     return loginData;
   }
@@ -74,6 +73,20 @@ class Api {
     var logoutData = await _performHttpRequest('POST', '/logout/', getapiData);
     bool status = logoutData['s'];
     return status;
+  }
+
+  addTask(String type, String description, String dateTime, String duration,
+      String empId) async {
+    Map getapiData = {};
+    getapiData['description'] = description;
+    getapiData['type'] = type;
+    getapiData['start_time'] = dateTime;
+    getapiData['time_taken'] = duration;
+    getapiData['emp'] = empId;
+    var addTaskData =
+        await _performHttpRequest('POST', '/task/add', getapiData);
+    print('data: $addTaskData');
+    return addTaskData;
   }
 
   _performHttpRequest(String apiReq, String endUrl, Map getapidata) async {
@@ -88,6 +101,7 @@ class Api {
       var datafinal = await response.stream.bytesToString();
       var data = jsonDecode(datafinal);
       return data;
-    } return {};
+    }
+    return {};
   }
 }

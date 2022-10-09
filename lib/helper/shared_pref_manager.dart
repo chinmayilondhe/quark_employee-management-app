@@ -25,6 +25,14 @@ class SharedPrefManager {
     return boolvalue;
   }
 
+  dynamic _getIntSharedprefs(var key) async {
+    var intval = prefs?.getInt("$key");
+    return intval;
+  }
+  _setIntSharedprefs(var key, var value) async {
+    prefs?.setInt("$key", value);
+  }
+
   _setStringSharedprefs(var key, var value) async {
     prefs?.setString("$key", value);
   }
@@ -51,6 +59,11 @@ class SharedPrefManager {
     String email = await _getStringSharedprefs('Email') ;
     return email;
   }
+  dynamic getRole() async {
+
+    int role = await _getIntSharedprefs('isAdmin');
+    return role;
+  }
 
   dynamic getLogin() {
     var loginUser = _getBoolSharedprefs('login');
@@ -67,6 +80,9 @@ class SharedPrefManager {
 
   setLogin(var user) {
     _setBoolSharedprefs('login', user);
+  }
+  setRole(var flag){
+    _setIntSharedprefs('isAdmin', flag);
   }
 
   removeMob() {

@@ -22,83 +22,96 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 100.0, bottom: 50),
-              child: Center(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          // decoration: const BoxDecoration(
+          //   gradient: LinearGradient(
+          //     colors: [Colors.lightBlueAccent, Colors.blue],
+          //     begin: Alignment.bottomLeft,
+          //     end: Alignment.topRight,
+          //   ),
+          // ),
+          child: Column(
+
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Center(
+                  child: SizedBox(
+                      width: 300,
+                      height: 170,
+                      // child: Image.asset('images/icon.png')
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Text(
+                  'Sign In',
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: SizedBox(
-                    width: 300,
-                    height: 170,
-                    // child: Image.asset('images/icon.png')
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 50),
-              child: Text(
-                'Sign In',
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade700),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: SizedBox(
-                width: 350,
-                child: TextFormField(
-                  controller: email,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Username',
+                  width: 350,
+                  child: TextFormField(
+                    controller: email,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Username',
+                    ),
+                    keyboardType: TextInputType.text,
+                    autofocus: true,
+                    cursorRadius: const Radius.circular(15),
                   ),
-                  keyboardType: TextInputType.text,
-                  autofocus: true,
-                  cursorRadius: const Radius.circular(15),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: SizedBox(
-                width: 350,
-                child: TextFormField(
-                  controller: password,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: SizedBox(
+                  width: 350,
+                  child: TextFormField(
+                    controller: password,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                    ),
+                    cursorRadius: const Radius.circular(15),
                   ),
-                  cursorRadius: const Radius.circular(15),
                 ),
               ),
-            ),
-            isLoading ? const CircularProgressIndicator() : Container(),
-            Padding(
-              padding: const EdgeInsets.only(top: 80.0, bottom: 20),
-              child: Container(
-                height: 50,
-                width: 350,
-                decoration: BoxDecoration(
-                    color: Colors.blue.shade900,
-                    borderRadius: BorderRadius.circular(15)),
-                child: TextButton(
-                  onPressed: login,
-                  child: const Text('Sign In',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 23,
-                      )),
+              isLoading ? const CircularProgressIndicator() : Container(),
+              Padding(
+                padding: const EdgeInsets.only(top: 80.0, bottom: 20),
+                child: Container(
+                  height: 50,
+                  width: 350,
+                  decoration: BoxDecoration(
+                      color: Colors.blue.shade900,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: TextButton(
+                    onPressed: login,
+                    child: const Text('Sign In',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 23,
+                        )),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            const Text('By signing in you agree to T&C and Privacy Policies')
-          ],
+              const SizedBox(
+                height: 8,
+              ),
+              const Text('By signing in you agree to T&C and Privacy Policies',
+                style: TextStyle(color: Colors.white),)
+            ],
+          ),
         ),
       ),
     );
@@ -114,11 +127,13 @@ Future<void> login() async {
   if (email.text.isNotEmpty && password.text.isNotEmpty) {
     var loginData = await apiCall.login(email_id, password_text);
     String employee_id=loginData['_id'] ?? "";
-    print('status ${loginData["status"]}');
+    int isAdmin=loginData['isAdmin'];
+
     if (loginData["status"] == "ok") {
       sharedData.setLogin(false);
       sharedData.setEmail(email.text);
       sharedData.setEmpID(employee_id);
+      sharedData.setRole(isAdmin);
       setState(() {
         isLoading = false;
       });

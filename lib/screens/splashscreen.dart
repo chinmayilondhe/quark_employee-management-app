@@ -53,11 +53,27 @@ class SplashState extends State<Splash> {
         fit: StackFit.expand,
         children: [
           Container(
-            decoration: const BoxDecoration(color: Colors.white),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.white, Colors.cyan,Colors.blue],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+              ),
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
+              SizedBox(
+                height: 150,
+                // child: Image.asset('images/icon.png')
+              ),
+
+           Text("WELCOME",style: TextStyle(color:Colors.white,fontSize: 50,
+               fontWeight: FontWeight.bold,fontFamily: 'RobotoMono'),),
+
               Expanded(
                 flex: 2,
                 child: Image(image: AssetImage('images/logo.png')),

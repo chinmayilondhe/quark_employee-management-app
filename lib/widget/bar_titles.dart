@@ -1,8 +1,8 @@
-//
+
 // import 'package:fl_chart/fl_chart.dart';
 // import 'package:flutter/material.dart';
 // import '../data/bar_data.dart';
-//
+
 // class BarTitles {
 //   static SideTitles getTopBottomTitles() => SideTitles(
 //     showTitles: true,
@@ -13,7 +13,7 @@
 //         .firstWhere((element) => element.id == id.toInt())
 //         .name,
 //   );
-//
+
 //   static SideTitles getSideTitles() => SideTitles(
 //     showTitles: true,
 //     getTextStyles: (value) =>

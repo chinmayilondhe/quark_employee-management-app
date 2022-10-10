@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flipr/helper/selected_list_controller.dart';
 import 'package:flipr/helper/shared_pref_manager.dart';
 import 'package:http/http.dart' as http;
 
@@ -6,7 +7,26 @@ import '../model/response_body.dart';
 
 SharedPrefManager shareddata = SharedPrefManager();
 
+List originalList = [];
+
+List<String> getOriginalList() {
+  List<String> originalListOfString = [];
+  for (int i = 0; i < originalList.length; i++) {
+    originalListOfString.add(originalList[i].toString());
+  }
+  return originalListOfString;
+}
 class Api {
+
+  Future<dynamic> getnotifications(String emp_id) async {
+    String endUrl = '/task/emp/' + emp_id;
+    List notificationsData =
+    await _performHttpRequest('GET', endUrl, {});
+    ResponseNotification responsedata = ResponseNotification(
+        response: notificationsData);
+    return responsedata;
+  }
+
   getPieChart(String emp_id) async {
     String endUrl = '/task/graph/' + emp_id;
      // print('empid $emp_id');

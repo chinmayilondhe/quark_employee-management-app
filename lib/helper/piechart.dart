@@ -45,21 +45,32 @@ class _PieChartGraphState extends State<PieChartGraph> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: SfCircularChart(
-        title: ChartTitle(text: 'Task Distribution of Employee'),
-        legend:
-            Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-        tooltipBehavior: _tooltipBehavior,
-        series: <CircularSeries>[
-          PieSeries<Data, String>(
-            dataSource: _chartData,
-            xValueMapper: (Data data, _) => data.task,
-            yValueMapper: (Data data, _) => data.val,
-            dataLabelSettings: DataLabelSettings(isVisible: true,
-            textStyle: TextStyle(fontSize: 25,color: Colors.white)),
-            enableTooltip: true,
-          )
-        ],
+      body: Container(
+        margin: EdgeInsets.all(18),
+        height: 300,
+        width: 350,
+        child: SfCircularChart(
+          backgroundColor: Colors.lightGreen.shade100,
+            // margin: EdgeInsets.all(15),
+          title: ChartTitle(text: 'Task Distribution of Employee',
+              textStyle: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.bold)),
+          legend:
+              Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap,
+                  position: LegendPosition.top,toggleSeriesVisibility: true,
+                  offset: Offset(10, 2),height: '30%'),
+          tooltipBehavior: _tooltipBehavior,
+          series: <CircularSeries>[
+            PieSeries<Data, String>(
+              radius: '75%',
+              dataSource: _chartData,
+              xValueMapper: (Data data, _) => data.task,
+              yValueMapper: (Data data, _) => data.val,
+              dataLabelSettings: DataLabelSettings(isVisible: true,
+              textStyle: TextStyle(fontSize: 15,color: Colors.white)),
+              enableTooltip: true,
+            )
+          ],
+        ),
       ),
     ));
   }

@@ -5,3 +5,10 @@ class ResponseBody {
   var work_Val;
   ResponseBody({required this.break_val, this.meet_val, this.work_Val});
 }
+
+class ResponseNotification{
+
+  var response ;
+
+  ResponseNotification({required this.response});
+}

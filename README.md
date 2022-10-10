@@ -1,16 +1,24 @@
-# flipr
+Features:
 
-A new Flutter project.
+1. Login of Admin/Employee and redirecting them to respective screens.
 
-## Getting Started
+2. Admin can add Employees 
+   A. Admin and employee both can login with the same URL. After login both will see their respective dashboards. (Role based access) 
 
-This project is a starting point for a Flutter application.
+3. Employees can add task(break,work,meeting)
+ a. Task Description (Text field) 
+ b. Task Type (Dropdown) (i.e Break, meeting and work) 
+ c. Start Time (Datetime) 
+ d. Time taken to complete the task in minutes. 
 
-A few resources to get you started if this is your first Flutter project:
+4. PieChart to display task distribution
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+5. ListView in Employee screen to display employee tasks
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Code repositories:
+
+
+
+Backend Code: https://github.com/omkar3602/quark_employee-management-app-backend
+
+Deployed API link: https://omkar3602-flipr-backend.herokuapp.com/

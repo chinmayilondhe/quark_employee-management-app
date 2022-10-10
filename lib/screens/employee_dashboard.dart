@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../helper/customdrawer.dart';
-import '../helper/display_task.dart';
-import '../helper/piechart.dart';
+import '../helper/display_task_employee.dart';
+import '../helper/piechart_employee.dart';
 
 import 'add_task.dart';
 

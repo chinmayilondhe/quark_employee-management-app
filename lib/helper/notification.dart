@@ -6,13 +6,20 @@ import '../model/response_body.dart';
 import 'api_model.dart';
 
 class Notification1 {
+  Notification1();
   List<ApiModel> notifications = [];
 
   SharedPrefManager sharedData = SharedPrefManager();
 
-  Future<List<ApiModel>> getNotifications(
-      ) async {
-    var empID = await sharedData.getEmpID();
+  Future<List<ApiModel>> getNotifications(String empId) async {
+    var empID;
+    if(empId==" "){
+       empID = await sharedData.getEmpID();
+    }
+    else{
+      empID=empId;
+    }
+
     Api apiCall = Api();
     ResponseNotification responseBody =
     await apiCall.getnotifications(empID);

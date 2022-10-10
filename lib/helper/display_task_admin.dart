@@ -4,17 +4,15 @@ import 'notification.dart';
 
 
 int count = 0;
-
-
-
-class DisplayTask extends StatefulWidget {
-  const DisplayTask({Key? key}) : super(key: key);
+class DisplayTaskAdmin extends StatefulWidget {
+  final String empID;
+  const DisplayTaskAdmin({Key? key,required this.empID}) : super(key: key);
 
   @override
-  _DisplayTaskState createState() => _DisplayTaskState();
+  _DisplayTaskAdminState createState() => _DisplayTaskAdminState();
 }
 
-class _DisplayTaskState extends State<DisplayTask> {
+class _DisplayTaskAdminState extends State<DisplayTaskAdmin> {
 
   List<ApiModel> alerts = <ApiModel>[];
   List<ApiModel> alerts1 = <ApiModel>[];
@@ -22,7 +20,7 @@ class _DisplayTaskState extends State<DisplayTask> {
   Future<bool> getalerts() async {
 
     Notification1 obj = Notification1();
-    alerts1 = await obj.getNotifications();
+    alerts1 = await obj.getNotifications(widget.empID);
     alerts.addAll(alerts1);
 
     setState(() {
@@ -32,7 +30,7 @@ class _DisplayTaskState extends State<DisplayTask> {
   }
   @override
   void initState() {
-   getalerts();
+    getalerts();
     super.initState();
   }
 
@@ -60,17 +58,17 @@ class _DisplayTaskState extends State<DisplayTask> {
       ),
       body:
 
-          ListView.builder(
-              itemCount: alerts.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Home(
-                    description: alerts[index].description ?? "",
-                    time: alerts[index].time ?? "",
-                    type: alerts[index].type ?? "",
-                  ),
-                );
-              }),
+      ListView.builder(
+          itemCount: alerts.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Home(
+                description: alerts[index].description ?? "",
+                time: alerts[index].time ?? "",
+                type: alerts[index].type ?? "",
+              ),
+            );
+          }),
       // ),
     );
   }

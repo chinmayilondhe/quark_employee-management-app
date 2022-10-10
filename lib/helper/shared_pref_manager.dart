@@ -24,7 +24,6 @@ class SharedPrefManager {
     var intval = prefs?.getInt("$key");
     return intval;
   }
-
   _setIntSharedprefs(var key, var value) async {
     prefs?.setInt("$key", value);
   }
@@ -50,20 +49,19 @@ class SharedPrefManager {
     String email = await _getStringSharedprefs('Email');
     return email;
   }
-
   dynamic getRole() async {
-    int role = await _getIntSharedprefs('isAdmin')??0;
-    return role;
-  }
 
-  dynamic getUserInfo() async {
-    var user = await _getStringSharedprefs('User');
-    return user;
+    int role = await _getIntSharedprefs('isAdmin');
+    return role;
   }
 
   dynamic getLogin() {
     var loginUser = _getBoolSharedprefs('login');
     return loginUser;
+  }
+  dynamic getUserInfo(){
+    var user=_getStringSharedprefs('username');
+    return user;
   }
 
   setEmpID(var emp_id) {
@@ -74,20 +72,17 @@ class SharedPrefManager {
     _setStringSharedprefs('Email', email);
   }
 
-  setUsername(var username) {
-    _setStringSharedprefs('User', username);
-  }
-
   setLogin(var user) {
     _setBoolSharedprefs('login', user);
   }
-
-  setRole(var flag) {
+  setRole(var flag){
     _setIntSharedprefs('isAdmin', flag);
   }
 
+  setUserName(var user){
+    _setStringSharedprefs('username', user);
+  }
   removeEmail() {
     _removeval('Email');
   }
-
 }

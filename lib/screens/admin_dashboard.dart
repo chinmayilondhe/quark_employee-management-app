@@ -1,3 +1,4 @@
+import 'package:flipr/helper/shared_pref_manager.dart';
 import 'dart:convert';
 
 import 'package:flipr/helper/shared_pref_manager.dart';
@@ -5,7 +6,10 @@ import 'package:flipr/screens/add_employee.dart';
 import 'package:flipr/screens/employee_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../helper/piechart.dart';
+import '../helper/piechart_employee.dart';
+
+import '../helper/piechart_employee.dart';
+import 'employee_details.dart';
 
 class Admin extends StatefulWidget {
   const Admin({Key? key}) : super(key: key);
@@ -15,6 +19,13 @@ class Admin extends StatefulWidget {
 }
 
 class _AdminState extends State<Admin> {
+  SharedPrefManager sharedData = SharedPrefManager();
+  var emp_id;
+
+  void getRoleStatus() async {
+    emp_id = await sharedData.getEmpID();
+  }
+
   getEmployee() async {
     var response = await http.get(
         Uri.https('omkar3602-flipr-backend.herokuapp.com', 'employee/list'));
@@ -66,29 +77,40 @@ class _AdminState extends State<Admin> {
                       itemBuilder: (context, i) {
                         return Card(
                           child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(snapshot.data[i].name),
-                                      Text(snapshot.data[i].department)
-                                    ],
-                                  ),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        print(snapshot.data[i].id);
-                                      },
-                                      child: Text("See Details"))
-                                ]),
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(snapshot.data[i].name),
+                                        Text(snapshot.data[i].department)
+                                      ],
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          print(snapshot.data[i].id);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      EmployeeDetails(
+                                                          ID: snapshot
+                                                              .data[i].id))));
+                                        },
+                                        child: Text("See Details")),
+                                  ]
+                              ),
+
                           ),
                         );
+
                       },
                     );
                   }

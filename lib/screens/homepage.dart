@@ -13,42 +13,43 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   SharedPrefManager sharedData = SharedPrefManager();
   int? role;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getRoleStatus();
+
   }
 
   void getRoleStatus() async {
     var roleval = await sharedData.getRole();
-    // print(roleval);
+    print(roleval);
     setState(() {
       role = roleval;
     });
     decideRole(role!);
   }
-
-  void decideRole(int role) {
-    if (role == 0) {
+  void decideRole(int role){
+    print(role);
+    if(role==0){
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (c) => Employee()),
+        MaterialPageRoute(
+            builder: (c) => Employee()),
       );
-    } else if (role == 1) {
+    }
+    else if(role==1){
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (c) => Admin()),
+        MaterialPageRoute(
+            builder: (c) => Admin()),
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(Text: ),
       body: Padding(
         padding: const EdgeInsets.all(8),
-        child: Text("Hi"),
       ),
     );
   }

@@ -41,9 +41,9 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: const Center(
                   child: SizedBox(
-                    width: 300,
-                    height: 170,
-                    // child: Image.asset('images/icon.png')
+                      width: 300,
+                      height: 170,
+                      // child: Image.asset('images/icon.png')
                   ),
                 ),
               ),
@@ -137,19 +137,17 @@ class _LoginPageState extends State<LoginPage> {
     String password_text = password.text;
     if (email.text.isNotEmpty && password.text.isNotEmpty) {
       var loginData = await apiCall.login(email_id, password_text);
-
       String employee_id = loginData['_id'];
       print('empid $employee_id');
       int isAdmin = loginData['isAdmin'];
       String username = await apiCall.getEmployeeInfo(employee_id);
-
 
       if (loginData["status"] == "ok") {
         sharedData.setLogin(false);
         sharedData.setEmail(email.text);
         sharedData.setEmpID(employee_id);
         sharedData.setRole(isAdmin);
-        sharedData.setUsername(username);
+        sharedData.setUserName(username);
         setState(() {
           isLoading = false;
         });

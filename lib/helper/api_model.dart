@@ -5,18 +5,37 @@ import 'package:http/http.dart' as http;
 import '../model/response_body.dart';
 
 SharedPrefManager shareddata = SharedPrefManager();
+List originalList = [];
+
+List<String> getOriginalList() {
+  List<String> originalListOfString = [];
+  for (int i = 0; i < originalList.length; i++) {
+    originalListOfString.add(originalList[i].toString());
+  }
+  return originalListOfString;
+}
 
 class Api {
+
+  Future<dynamic> getnotifications(String emp_id) async {
+    String endUrl = '/task/emp/' + emp_id;
+    List notificationsData =
+    await _performHttpRequest('GET', endUrl, {});
+    ResponseNotification responsedata = ResponseNotification(
+        response: notificationsData);
+    return responsedata;
+  }
+
   getPieChart(String emp_id) async {
     String endUrl = '/task/graph/' + emp_id;
-     // print('empid $emp_id');
+
+    // getapiData['f'] = getFilterList();
     var pieChartData = await _performHttpRequest('GET', endUrl, {});
     var break_val = pieChartData['break'];
     var meet_val = pieChartData['meeting'];
     var work_Val = pieChartData['work'];
     ResponseBody responsedata = ResponseBody(
         break_val: break_val, meet_val: meet_val, work_Val: work_Val);
-    print('type ${responsedata.break_val.runtimeType}');
     return responsedata;
   }
   addTask(String type, String description, String dateTime, String duration,

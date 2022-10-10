@@ -1,10 +1,8 @@
-
 import 'package:flipr/helper/shared_pref_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../model/response_body.dart';
 import 'api_model.dart';
-
 
 class PieChartGraph extends StatefulWidget {
   const PieChartGraph({Key? key}) : super(key: key);
@@ -14,19 +12,18 @@ class PieChartGraph extends StatefulWidget {
 }
 
 class _PieChartGraphState extends State<PieChartGraph> {
-
   // PieData obj = PieData();
-   List<Data> _chartData=[];
+  List<Data> _chartData = [];
   Api apiCall = Api();
   SharedPrefManager prefs = SharedPrefManager();
   late TooltipBehavior _tooltipBehavior;
-  List<Data> chartDataGraph=[];
-  String temp="",empId="";
+  List<Data> chartDataGraph = [];
+  String temp = "", empId = "";
+
   getDataGraph() async {
     chartDataGraph = await getData();
-
     setState(() {
-        _chartData = chartDataGraph;
+      _chartData = chartDataGraph;
     });
   }
 
@@ -38,13 +35,10 @@ class _PieChartGraphState extends State<PieChartGraph> {
     });
   }
 
-
   @override
   void initState() {
     getDataGraph();
-
     _loadEmpId();
-
     _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
   }
@@ -53,27 +47,45 @@ class _PieChartGraphState extends State<PieChartGraph> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: SfCircularChart(
-        title: ChartTitle(text: 'Task Distribution of Employee'),
-        legend:
-            Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-        tooltipBehavior: _tooltipBehavior,
-        series: <CircularSeries>[
-          PieSeries<Data, String>(
-            dataSource: _chartData,
-            xValueMapper: (Data data, _) => data.task,
-            yValueMapper: (Data data, _) => data.val,
-            dataLabelSettings: DataLabelSettings(isVisible: true,
-            textStyle: TextStyle(fontSize: 25,color: Colors.white)),
-            enableTooltip: true,
-          )
-        ],
+      body: Container(
+        margin: EdgeInsets.all(18),
+        height: 300,
+        width: 350,
+        child: SfCircularChart(
+          backgroundColor: Colors.lightGreen.shade100,
+          // margin: EdgeInsets.all(15),
+          title: ChartTitle(
+              text: 'Task Distribution of Employee',
+              textStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold)),
+          legend: Legend(
+              isVisible: true,
+              overflowMode: LegendItemOverflowMode.wrap,
+              position: LegendPosition.top,
+              toggleSeriesVisibility: true,
+              offset: Offset(10, 2),
+              height: '30%'),
+          tooltipBehavior: _tooltipBehavior,
+          series: <CircularSeries>[
+            PieSeries<Data, String>(
+              radius: '75%',
+              dataSource: _chartData,
+              xValueMapper: (Data data, _) => data.task,
+              yValueMapper: (Data data, _) => data.val,
+              dataLabelSettings: DataLabelSettings(
+                  isVisible: true,
+                  textStyle: TextStyle(fontSize: 15, color: Colors.white)),
+              enableTooltip: true,
+            )
+          ],
+        ),
       ),
     ));
   }
 
-   getData() async {
-
+  getData() async {
     var break_val, meet_val, work_val;
     empId = await prefs.getEmpID();
     ResponseBody responseBody = await apiCall.getPieChart(empId);
@@ -88,10 +100,10 @@ class _PieChartGraphState extends State<PieChartGraph> {
     return data;
   }
 }
+
 class Data {
   final String task;
   final double val;
+
   Data(this.task, this.val);
 }
-
-

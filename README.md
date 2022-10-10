@@ -24,6 +24,8 @@ Backend Code: https://github.com/omkar3602/quark_employee-management-app-backend
 Deployed API link: https://omkar3602-flipr-backend.herokuapp.com/
 
 Login Credentials:
+
+
 Admin Login: 
 email: omkar3602@gmail.com,
 password: 1234

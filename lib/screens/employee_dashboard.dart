@@ -16,13 +16,13 @@ class _EmployeeState extends State<Employee> {
       appBar: AppBar(
         title: Text('Employee'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Task()));
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Task()));
+          },
+          icon: Icon(Icons.add),
+          label: Text("Add Task")),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flipr/helper/shared_pref_manager.dart';
 import 'package:flipr/screens/add_employee.dart';
 import 'package:flipr/screens/employee_dashboard.dart';
+import 'package:flipr/screens/employee_details.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../helper/piechart.dart';
@@ -31,12 +32,6 @@ class _AdminState extends State<Admin> {
     print(employee.length);
     return employee;
   }
-
-  // SharedPrefManager sharedData = SharedPrefManager();
-  // var emp_id;
-  // void getRoleStatus() async {
-  //  emp_id = await sharedData.getEmpID();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +79,13 @@ class _AdminState extends State<Admin> {
                                   ElevatedButton(
                                       onPressed: () {
                                         print(snapshot.data[i].id);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    EmployeeDetails(
+                                                        ID: snapshot
+                                                            .data[i].id))));
                                       },
                                       child: Text("See Details"))
                                 ]),

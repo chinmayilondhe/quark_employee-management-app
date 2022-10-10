@@ -89,6 +89,22 @@ class Api {
     return addTaskData;
   }
 
+  addNewEmployee(String name, String email, String number, String phone,
+      String department, String doj, String password) async {
+    Map getapiData = {};
+    getapiData['name'] = name;
+    getapiData['email'] = email;
+    getapiData['phone'] = number;
+    getapiData['department'] = department;
+    getapiData['doj'] = doj;
+    getapiData['password'] = password;
+    getapiData['role'] = "emp";
+    var addNewEmployee =
+        await _performHttpRequest('POST', '/employee/add', getapiData);
+    print('data: $addNewEmployee');
+    return addNewEmployee;
+  }
+
   _performHttpRequest(String apiReq, String endUrl, Map getapidata) async {
     var ipAddress = "https://omkar3602-flipr-backend.herokuapp.com";
 

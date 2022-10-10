@@ -33,9 +33,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   Future<void> logout() async {
-    user = sharedData.getUserInfo();
+
+    user = await sharedData.getUserInfo();
     sharedData.setLogin(true);
-    sharedData.removeMob();
+    sharedData.removeEmail();
+
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(

@@ -137,10 +137,12 @@ class _LoginPageState extends State<LoginPage> {
     String password_text = password.text;
     if (email.text.isNotEmpty && password.text.isNotEmpty) {
       var loginData = await apiCall.login(email_id, password_text);
+
       String employee_id = loginData['_id'];
       print('empid $employee_id');
       int isAdmin = loginData['isAdmin'];
       String username = await apiCall.getEmployeeInfo(employee_id);
+
 
       if (loginData["status"] == "ok") {
         sharedData.setLogin(false);

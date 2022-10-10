@@ -47,17 +47,23 @@ class SharedPrefManager {
   }
 
   dynamic getEmail() async {
+
     String email = await _getStringSharedprefs('Email');
+
     return email;
   }
 
   dynamic getRole() async {
+
     int role = await _getIntSharedprefs('isAdmin')??0;
+
     return role;
   }
 
   dynamic getUserInfo() async {
+
     var user = await _getStringSharedprefs('User');
+
     return user;
   }
 
@@ -87,6 +93,7 @@ class SharedPrefManager {
   }
 
   removeEmail() {
+
     _removeval('Email');
   }
 

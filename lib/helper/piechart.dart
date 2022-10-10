@@ -1,8 +1,10 @@
+
 import 'package:flipr/helper/shared_pref_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../model/response_body.dart';
 import 'api_model.dart';
+
 
 class PieChartGraph extends StatefulWidget {
   const PieChartGraph({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class PieChartGraph extends StatefulWidget {
 }
 
 class _PieChartGraphState extends State<PieChartGraph> {
+
   // PieData obj = PieData();
    List<Data> _chartData=[];
   Api apiCall = Api();
@@ -21,10 +24,12 @@ class _PieChartGraphState extends State<PieChartGraph> {
   String temp="",empId="";
   getDataGraph() async {
     chartDataGraph = await getData();
+
     setState(() {
         _chartData = chartDataGraph;
     });
   }
+
   _loadEmpId() async {
     temp = await prefs.getEmpID();
 
@@ -33,10 +38,13 @@ class _PieChartGraphState extends State<PieChartGraph> {
     });
   }
 
+
   @override
   void initState() {
     getDataGraph();
+
     _loadEmpId();
+
     _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
   }
@@ -63,6 +71,7 @@ class _PieChartGraphState extends State<PieChartGraph> {
       ),
     ));
   }
+
    getData() async {
 
     var break_val, meet_val, work_val;
@@ -84,3 +93,5 @@ class Data {
   final double val;
   Data(this.task, this.val);
 }
+
+

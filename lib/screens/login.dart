@@ -16,8 +16,9 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   bool isLoading = false;
-
   SharedPrefManager sharedData = SharedPrefManager();
+  SharedPreferences? logindata;
+  bool? newuser;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,10 @@ class _LoginPageState extends State<LoginPage> {
           // ),
           child: Column(
             children: <Widget>[
+              // ignore: prefer_const_constructors
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: Center(
+                child: const Center(
                   child: SizedBox(
                     width: 300,
                     height: 170,
@@ -45,8 +47,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 50),
                 child: Text(
                   'Sign In',
                   style: TextStyle(
@@ -97,7 +99,14 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.blue.shade900,
                       borderRadius: BorderRadius.circular(15)),
                   child: TextButton(
-                    onPressed: login,
+                    onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    login();
+
+                    // }
+                  },
                     child: const Text('Sign In',
                         style: TextStyle(
                           color: Colors.white,
@@ -128,10 +137,10 @@ class _LoginPageState extends State<LoginPage> {
     String password_text = password.text;
     if (email.text.isNotEmpty && password.text.isNotEmpty) {
       var loginData = await apiCall.login(email_id, password_text);
-      String employee_id = loginData['_id'] ?? "";
-      print(employee_id);
+      String employee_id = loginData['_id'];
+      print('empid $employee_id');
       int isAdmin = loginData['isAdmin'];
-      String username = apiCall.getEmployeeInfo(employee_id);
+      String username = await apiCall.getEmployeeInfo(employee_id);
 
       if (loginData["status"] == "ok") {
         sharedData.setLogin(false);

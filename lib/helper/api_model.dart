@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flipr/helper/shared_pref_manager.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/response_body.dart';
@@ -10,14 +9,14 @@ SharedPrefManager shareddata = SharedPrefManager();
 class Api {
   getPieChart(String emp_id) async {
     String endUrl = '/task/graph/' + emp_id;
-
-    // getapiData['f'] = getFilterList();
+     // print('empid $emp_id');
     var pieChartData = await _performHttpRequest('GET', endUrl, {});
     var break_val = pieChartData['break'];
     var meet_val = pieChartData['meeting'];
     var work_Val = pieChartData['work'];
     ResponseBody responsedata = ResponseBody(
         break_val: break_val, meet_val: meet_val, work_Val: work_Val);
+    print('type ${responsedata.break_val.runtimeType}');
     return responsedata;
   }
   addTask(String type, String description, String dateTime, String duration,

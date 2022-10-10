@@ -154,11 +154,6 @@ class _TaskState extends State<Task> {
                 padding: EdgeInsets.all(5),
                 child: ElevatedButton(
                   onPressed: () {
-                    // print(selectedItem);
-                    // print(_taskDescription.text);
-                    // print(finalDateTime);
-                    // print(_taskDuration.text);
-                    // print(empId);
                     addNewTask();
                   },
                   child: Text("Add task"),

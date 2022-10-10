@@ -4,7 +4,6 @@ import '../helper/piechart.dart';
 
 import 'add_task.dart';
 
-
 class Employee extends StatefulWidget {
   const Employee({Key? key}) : super(key: key);
 
@@ -27,9 +26,10 @@ class _EmployeeState extends State<Employee> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Task()));
       },
-      child: Icon(Icons.add),
+    // icon: Icon(Icons.add),
+    // label: Text("Add Task")),
 
-    ),
-      );
+    ));
+
   }
 }

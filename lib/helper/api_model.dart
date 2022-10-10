@@ -10,6 +10,7 @@ SharedPrefManager shareddata = SharedPrefManager();
 class Api {
   getPieChart(String emp_id) async {
     String endUrl = '/task/graph/' + emp_id;
+
     // getapiData['f'] = getFilterList();
     var pieChartData = await _performHttpRequest('GET', endUrl, {});
     var break_val = pieChartData['break'];
@@ -28,7 +29,7 @@ class Api {
     getapiData['time_taken'] = duration;
     getapiData['emp'] = empId;
     var addTaskData =
-    await _performHttpRequest('POST', '/task/add', getapiData);
+        await _performHttpRequest('POST', '/task/add', getapiData);
     print('data: $addTaskData');
     return addTaskData;
   }
@@ -48,6 +49,22 @@ class Api {
     return loginData;
   }
 
+  addNewEmployee(String name, String email, String number, String phone,
+      String department, String doj, String password) async {
+    Map getapiData = {};
+    getapiData['name'] = name;
+    getapiData['email'] = email;
+    getapiData['phone'] = number;
+    getapiData['department'] = department;
+    getapiData['doj'] = doj;
+    getapiData['password'] = password;
+    getapiData['role'] = "emp";
+    var addNewEmployee =
+        await _performHttpRequest('POST', '/employee/add', getapiData);
+    print('data: $addNewEmployee');
+    return addNewEmployee;
+  }
+
   _performHttpRequest(String apiReq, String endUrl, Map getapidata) async {
     var ipAddress = "https://omkar3602-flipr-backend.herokuapp.com";
 
@@ -60,6 +77,7 @@ class Api {
       var datafinal = await response.stream.bytesToString();
       var data = jsonDecode(datafinal);
       return data;
-    } return {};
+    }
+    return {};
   }
 }

@@ -1,3 +1,5 @@
+This is a flutter based application where admin can add employee along with it's data and employee can add tasks completed daily.
+
 Features:
 
 1. Login of Admin/Employee and redirecting them to respective screens.
@@ -17,8 +19,16 @@ Features:
 
 Code repositories:
 
-
-
 Backend Code: https://github.com/omkar3602/quark_employee-management-app-backend
 
 Deployed API link: https://omkar3602-flipr-backend.herokuapp.com/
+
+Login Credentials:
+Admin Login: 
+email: omkar3602@gmail.com,
+password: 1234
+
+
+Employee Login: 
+email :dummy@gmail.com,
+password :1234

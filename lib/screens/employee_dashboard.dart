@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../helper/customdrawer.dart';
+import '../helper/piechart.dart';
 
 import 'add_task.dart';
 
@@ -13,16 +15,21 @@ class _EmployeeState extends State<Employee> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Employee'),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Task()));
-          },
-          icon: Icon(Icons.add),
-          label: Text("Add Task")),
-    );
+
+      appBar: AppBar(title: Text('Employee'),),
+      drawer: const CustomDrawer(),
+      body: Container(
+        height: 700,
+        child: PieChartGraph(),
+    ), floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Task()));
+      },
+    // icon: Icon(Icons.add),
+    // label: Text("Add Task")),
+
+    ));
+
   }
 }

@@ -1,27 +1,27 @@
-//
+
 // import 'package:fl_chart/fl_chart.dart';
 // import 'package:flutter/material.dart';
-//
+
 // import '../data/bar_data.dart';
 // import 'bar_titles.dart';
-//
+
 // class BarChartWidget extends StatelessWidget {
 //   final double barWidth = 22;
-//
+
 //   @override
 //   Widget build(BuildContext context) => BarChart(
 //     BarChartData(
 //       alignment: BarChartAlignment.center,
 //       maxY: 20,
-//       minY: -20,
-//       groupsSpace: 12,
+
+//       groupsSpace: 3,
 //       barTouchData: BarTouchData(enabled: true),
-//       titlesData: FlTitlesData(
-//         topTitles: BarTitles.getTopBottomTitles(),
-//         bottomTitles: BarTitles.getTopBottomTitles(),
-//         leftTitles: BarTitles.getSideTitles(),
-//         rightTitles: BarTitles.getSideTitles(),
-//       ),
+//       // titlesData: FlTitlesData(
+//       //   topTitles: BarTitles.getTopBottomTitles(),
+//       //   bottomTitles: BarTitles.getTopBottomTitles(),
+//       //   leftTitles: BarTitles.getSideTitles(),
+//       //   rightTitles: BarTitles.getSideTitles(),
+//       // ),
 //       gridData: FlGridData(
 //         checkToShowHorizontalLine: (value) => value % BarData.interval == 0,
 //         getDrawingHorizontalLine: (value) {
@@ -46,7 +46,7 @@
 //             BarChartRodData(
 //               y: data.y,
 //               width: barWidth,
-//               colors: [data.color],
+//               // colors: [data.color],
 //               borderRadius: data.y > 0
 //                   ? BorderRadius.only(
 //                 topLeft: Radius.circular(6),

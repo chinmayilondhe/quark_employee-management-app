@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/api_model.dart';
 import '../helper/shared_pref_manager.dart';
 import 'homepage.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -33,15 +34,14 @@ class _LoginPageState extends State<LoginPage> {
           //   ),
           // ),
           child: Column(
-
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Center(
                   child: SizedBox(
-                      width: 300,
-                      height: 170,
-                      // child: Image.asset('images/icon.png')
+                    width: 300,
+                    height: 170,
+                    // child: Image.asset('images/icon.png')
                   ),
                 ),
               ),
@@ -72,7 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 child: SizedBox(
                   width: 350,
                   child: TextFormField(
@@ -108,8 +109,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 8,
               ),
-              const Text('By signing in you agree to T&C and Privacy Policies',
-                style: TextStyle(color: Colors.white),)
+              const Text(
+                'By signing in you agree to T&C and Privacy Policies',
+                style: TextStyle(color: Colors.white),
+              )
             ],
           ),
         ),
@@ -117,42 +120,44 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-String mobile = "";
-Api apiCall = Api();
+  String mobile = "";
+  Api apiCall = Api();
 
-Future<void> login() async {
+  Future<void> login() async {
+    String email_id = email.text;
+    String password_text = password.text;
+    if (email.text.isNotEmpty && password.text.isNotEmpty) {
+      var loginData = await apiCall.login(email_id, password_text);
+      String employee_id = loginData['_id'] ?? "";
+      print(employee_id);
+      int isAdmin = loginData['isAdmin'];
+      String username = apiCall.getEmployeeInfo(employee_id);
 
-  String email_id = email.text ;
-  String password_text=password.text;
-  if (email.text.isNotEmpty && password.text.isNotEmpty) {
-    var loginData = await apiCall.login(email_id, password_text);
-    String employee_id=loginData['_id'] ?? "";
-    int isAdmin=loginData['isAdmin'];
-
-    if (loginData["status"] == "ok") {
-      sharedData.setLogin(false);
-      sharedData.setEmail(email.text);
-      sharedData.setEmpID(employee_id);
-      sharedData.setRole(isAdmin);
-      setState(() {
-        isLoading = false;
-      });
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (c) => HomePage()),
-      );
+      if (loginData["status"] == "ok") {
+        sharedData.setLogin(false);
+        sharedData.setEmail(email.text);
+        sharedData.setEmpID(employee_id);
+        sharedData.setRole(isAdmin);
+        sharedData.setUsername(username);
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (c) => HomePage()),
+        );
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Invalid Email')));
+        setState(() {
+          isLoading = false;
+        });
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid Email')));
+          const SnackBar(content: Text('Credentials are required')));
       setState(() {
         isLoading = false;
       });
     }
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Credentials are required')));
-    setState(() {
-      isLoading = false;
-    });
   }
-}
 }

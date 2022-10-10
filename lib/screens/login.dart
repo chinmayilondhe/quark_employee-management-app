@@ -129,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
     if (email.text.isNotEmpty && password.text.isNotEmpty) {
       var loginData = await apiCall.login(email_id, password_text);
       String employee_id = loginData['_id'] ?? "";
+      print(employee_id);
       int isAdmin = loginData['isAdmin'];
       String username = apiCall.getEmployeeInfo(employee_id);
 

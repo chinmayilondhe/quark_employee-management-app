@@ -19,6 +19,19 @@ class Api {
         break_val: break_val, meet_val: meet_val, work_Val: work_Val);
     return responsedata;
   }
+  addTask(String type, String description, String dateTime, String duration,
+      String empId) async {
+    Map getapiData = {};
+    getapiData['description'] = description;
+    getapiData['type'] = type;
+    getapiData['start_time'] = dateTime;
+    getapiData['time_taken'] = duration;
+    getapiData['emp'] = empId;
+    var addTaskData =
+    await _performHttpRequest('POST', '/task/add', getapiData);
+    print('data: $addTaskData');
+    return addTaskData;
+  }
 
   getEmployeeInfo(String emp_id) async {
     String endUrl = '/employee/' + emp_id;
@@ -30,8 +43,7 @@ class Api {
     Map getapiData = {};
     getapiData['email'] = email;
     getapiData['password'] = password;
-    var loginData =
-        await _performHttpRequest('POST', '/employee/login', getapiData);
+    var loginData = await _performHttpRequest('POST', '/employee/login', getapiData);
     print('data: $loginData');
     return loginData;
   }
@@ -48,7 +60,6 @@ class Api {
       var datafinal = await response.stream.bytesToString();
       var data = jsonDecode(datafinal);
       return data;
-    }
-    return {};
+    } return {};
   }
 }

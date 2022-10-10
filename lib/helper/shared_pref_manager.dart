@@ -56,7 +56,7 @@ class SharedPrefManager {
   }
 
   dynamic getEmail() async {
-    String email = await _getStringSharedprefs('Email');
+    String email = await _getStringSharedprefs('Email')??" ";
     return email;
   }
 

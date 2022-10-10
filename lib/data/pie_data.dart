@@ -9,6 +9,7 @@ class PieData {
   SharedPrefManager sharedData = SharedPrefManager();
   Future<List<Data>> getData() async {
     String emp_id = await sharedData.getEmpID();
+    print(emp_id);
     var break_val, meet_val, work_val;
     ResponseBody responseBody = await apiCall.getPieChart(emp_id);
 

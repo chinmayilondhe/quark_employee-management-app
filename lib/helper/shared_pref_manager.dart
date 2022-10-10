@@ -24,6 +24,7 @@ class SharedPrefManager {
     var intval = prefs?.getInt("$key");
     return intval;
   }
+
   _setIntSharedprefs(var key, var value) async {
     prefs?.setInt("$key", value);
   }
@@ -72,10 +73,12 @@ class SharedPrefManager {
     _setStringSharedprefs('Email', email);
   }
 
+
   setLogin(var user) {
     _setBoolSharedprefs('login', user);
   }
-  setRole(var flag){
+
+  setRole(var flag) {
     _setIntSharedprefs('isAdmin', flag);
   }
 

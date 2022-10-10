@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/api_model.dart';
 import '../helper/shared_pref_manager.dart';
 import 'homepage.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -34,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
           //   ),
           // ),
           child: Column(
-
             children: <Widget>[
+              // ignore: prefer_const_constructors
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: const Center(
@@ -73,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 child: SizedBox(
                   width: 350,
                   child: TextFormField(
@@ -97,7 +99,14 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.blue.shade900,
                       borderRadius: BorderRadius.circular(15)),
                   child: TextButton(
-                    onPressed: login,
+                    onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    login();
+
+                    // }
+                  },
                     child: const Text('Sign In',
                         style: TextStyle(
                           color: Colors.white,
@@ -109,8 +118,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 8,
               ),
-              const Text('By signing in you agree to T&C and Privacy Policies',
-                style: TextStyle(color: Colors.white),)
+              const Text(
+                'By signing in you agree to T&C and Privacy Policies',
+                style: TextStyle(color: Colors.white),
+              )
             ],
           ),
         ),
@@ -118,8 +129,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-String mobile = "";
-Api apiCall = Api();
+  String mobile = "";
+  Api apiCall = Api();
 
   Future<void> login() async {
     String email_id = email.text;

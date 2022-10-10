@@ -32,6 +32,7 @@ class SplashState extends State<Splash> {
     WidgetsFlutterBinding.ensureInitialized();
     await sharedData.init();
     var email = await sharedData.getEmail();
+    print('email $email');
     setState(() {
       finalemail = email;
     });
@@ -39,6 +40,7 @@ class SplashState extends State<Splash> {
 
   startSplashScreen() {
     getValidationData();
+    print('femail $finalemail');
     var duration = const Duration(seconds: 3);
     return Timer(duration, () {
       Navigator.of(context).pushReplacement(
